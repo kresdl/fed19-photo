@@ -3,7 +3,7 @@
 require('dotenv').config();
 const app = require('express')(),
   bodyParser = require('body-parser'),
-  { cors, jwt } = require('./routes/middleware'),
+  { cors, jwt } = require('./controllers/middleware'),
   account = require('./routes/account'),
   albums = require('./routes/albums'),
   photos = require('./routes/photos'),

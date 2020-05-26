@@ -4,6 +4,6 @@ const router = require('express').Router(),
   { albums, albumId } = require('../controllers/albums');
 
 router.get('/', albums);
-router.get('/:id', albumId);
+router.get('/:albumId', albumId);
 
 module.exports = router;

@@ -4,6 +4,6 @@ const router = require('express').Router(),
   { photos, photoId } = require('../controllers/photos');
 
 router.get('/', photos);
-router.get('/:id', photoId);
+router.get('/:photoId', photoId);
 
 module.exports = router;

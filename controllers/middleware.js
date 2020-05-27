@@ -15,13 +15,47 @@ exports.cors = (req, res, next) => {
 };
 
 exports.jwt = (req, res, next) => {
-  const token = req.get('Authorization').split(' ')[1];
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({
-      status: 'fail',
-      data: 'Access denied'
+  const auth = req.get('Authorization');
+
+  if (auth) {
+    const token = auth.split(' ')[1];
+
+    if (token) {
+      try {
+        const { user } = jwt.verify(token, process.env.JWT_SECRET);
+        res.locals.user = user;
+        return next();
+
+      } catch (err) {
+        console.log(err);
+        return res.fail(403, 'Access denied');
+      }
+    }
+  }
+  return res.fail(403, 'Access denied');  
+};
+
+exports.response = (req, res, next) => {
+  res.success = (status = 200, data = 'Operation succeeded') => {
+    res.status(status).json({
+      status: 'success',
+      data 
     });
-    res.locals.user = user;
-    next();
-  })
+  };
+
+  res.fail = (status = 400, data = 'Operation failed') => {
+    res.status(status).json({
+      status: 'fail',
+      data
+    });
+  };
+
+  res.error = (status = 500, message = 'Internal error') => {
+    res.status(status).json({ 
+      status: 'error', 
+      message
+    })
+  };
+
+  next();
 };

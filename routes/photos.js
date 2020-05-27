@@ -1,9 +1,11 @@
 'use strict';
 
 const router = require('express').Router(),
-  { photos, photoId } = require('../controllers/photos');
+  { photos, photo, newPhoto, deletePhoto } = require('../controllers/photos');
 
 router.get('/', photos);
-router.get('/:photoId', photoId);
+router.post('/', newPhoto);
+router.delete('/:photoId', deletePhoto);
+router.get('/:photoId', photo);
 
 module.exports = router;

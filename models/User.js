@@ -1,3 +1,5 @@
+'use strict';
+
 const bookshelf = require('../bookshelf'),
   bcrypt = require('bcrypt');
 
@@ -14,31 +16,36 @@ module.exports = bookshelf.model('User', {
 }, {
 
   byId(id) {
-    return this.forge({ id })
-      .fetch({ withRelated: ['albums', 'photos'] });
+    return this
+      .forge({ id })
+      .fetch({ 
+        withRelated: ['albums', 'photos'], 
+        require: false 
+      });
   },
 
-  async register({ first_name, last_name, email, password, }) {
+  async register({ firstName, lastName, email, password, }) {
     const hashed = await bcrypt.hash(password, 10);
 
-    try {
-      await this
-        .forge({
-          first_name, last_name, email,
-          password: hashed
-        })
-        .save();
-      return true;
-
-    } catch (err) {
-      console.log(err);
-      return false;
-    }
+    return this
+      .forge({
+        first_name: firstName, 
+        last_name: lastName, 
+        email,
+        password: hashed
+      })
+      .save();
   },
 
   async login({ email, password }) {
-    const user = await this.forge({ email, password }).fetch(),
-      pass = await bcrypt.compare(password, user.password);
-    return pass ? user : null;
+    const user = await this
+      .forge({ email })
+      .fetch({ require: false });
+      
+    if (user.id) {
+      const pass = await bcrypt.compare(password, user.get('password'));
+      if (pass) return user;
+    }
+    return null;
   }
 });

@@ -1,6 +1,7 @@
 'use strict';
 
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken'),
+  { validationResult } = require('express-validator');
 
 exports.cors = (req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*');
@@ -58,4 +59,10 @@ exports.response = (req, res, next) => {
   };
 
   next();
+};
+
+exports.validate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) return next();
+  res.fail(422, errors.array());
 };

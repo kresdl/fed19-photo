@@ -13,7 +13,7 @@ exports.register = async (req, res) => {
       email, password 
     });
 
-    res.success();
+    res.success(200, 'User created');
 
   } catch (err) {
     console.log(err);

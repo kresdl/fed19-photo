@@ -1,6 +1,7 @@
 'use strict';
 
-const bookshelf = require('../bookshelf');
+const bookshelf = require('../bookshelf'),
+  Album = require('../models/Album');
 
 module.exports = bookshelf.model('Photo', {
   tableName: 'photos',
@@ -15,8 +16,8 @@ module.exports = bookshelf.model('Photo', {
 }, {
 
   byId(userId, id) {
-    return this
-      .forge({ 
+    return this.forge()
+      .where({ 
         user_id: userId,
         id 
       })
@@ -27,8 +28,8 @@ module.exports = bookshelf.model('Photo', {
   },
 
   byUser(userId) {
-    return this
-      .forge({ user_id: userId })
+    return this.forge()
+      .where({ user_id: userId })
       .fetchAll({ 
         withRelated: ['albums'], 
         require: false 
@@ -36,31 +37,30 @@ module.exports = bookshelf.model('Photo', {
   },
 
   async create({ userId, title, url, comment, albums }) {
-    const albumIds = albums.map(album => album.get('id')),
+    const photo = await this.forge({ 
+      user_id: userId,
+      title, url, comment
+    })
+      .save();
 
-      photo = await this
-        .forge({ 
-          user_id: userId,
-          title, url, comment
-        })
-        .save();
-
-    await photo
-      .albums()
-      .attach(albumIds);
-    
+    if (albums) {
+      const rel = await Album.byNames(userId, albums),
+        ids = rel.map(album => album.id);
+      await photo.albums().attach(ids);  
+    }
     return photo;
   },
-
+  
   async destroy(userId, id) {
-    const photo = await this
-      .forge({ 
+    const photo = await this.forge()
+      .where({ 
         user_id: userId, 
         id 
       })
       .fetch({ require: false });
     
     if (!photo) return false;
+
     photo.destroy();
     return true;
   }

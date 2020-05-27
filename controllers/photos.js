@@ -21,7 +21,7 @@ exports.photos = async (req, res) => {
 
 exports.photo = async (req, res) => {
   try {
-    const photo = await Photo.byId(res.locals.user, req.params.photoId);
+    const photo = await Photo.byId(res.locals.user, +req.params.photoId);
 
     if (photo) {
       res.success(200, photo);
@@ -38,16 +38,15 @@ exports.photo = async (req, res) => {
 
 exports.newPhoto = async (req, res) => {
   try {
-    const { title, url, comment, albums: albumNames } = req.body,
-      { user } = res.locals,
-      albums = await Album.byNames(user, albumNames);
+    const { title, url, comment, albums } = req.body,
+      { user } = res.locals;
 
     await Photo.create({ 
       userId: user,
       title, url, comment, albums
     });
 
-    res.success();  
+    res.success(200, 'Photo created');  
 
   } catch (err) {
     console.log(err);
@@ -62,7 +61,7 @@ exports.newPhoto = async (req, res) => {
 
 exports.deletePhoto = async (req, res) => {
   try {
-    const ok = await Photo.destroy(res.locals.user, req.params.photoId);
+    const ok = await Photo.destroy(res.locals.user, +req.params.photoId);
 
     if (ok) {
       res.success(200, 'Photo deleted');

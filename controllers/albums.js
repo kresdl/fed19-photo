@@ -20,7 +20,7 @@ exports.albums = async (req, res) => {
 
 exports.album = async (req, res) => {
   try {
-    const album = await Album.byId(res.locals.user, req.params.albumId);
+    const album = await Album.byId(res.locals.user, +req.params.albumId);
 
     if (album) {
       res.success(200, album);
@@ -54,7 +54,7 @@ exports.newAlbum = async (req, res) => {
 
 exports.deleteAlbum = async (req, res) => {
   try {
-    const ok = await Album.destroy(res.locals.user, req.params.albumId);
+    const ok = await Album.destroy(res.locals.user, +req.params.albumId);
 
     if (ok) {
       res.success(200, 'Album deleted');

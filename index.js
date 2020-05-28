@@ -7,8 +7,7 @@ const app = require('express')(),
   users = require('./routes/users'),
   albums = require('./routes/albums'),
   photos = require('./routes/photos'),
-  { env } = process,
-  port = env.PORT | 3000;
+  port = process.env.PORT || 3000;
 
 app.disable('x-powered-by');
 app.use(cors, bodyParser.json(), response);
@@ -16,6 +15,6 @@ app.use('/', users, jwt);
 app.use('/albums', albums);
 app.use('/photos', photos);
 
-app.listen(port, 'localhost', () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Listening on port ${port}...`);
 });

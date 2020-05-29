@@ -14,6 +14,7 @@ app.use(cors, bodyParser.json(), response);
 app.use('/', users, jwt);
 app.use('/albums', albums);
 app.use('/photos', photos);
+app.use('/', (req, res) => res.fail());
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Listening on port ${port}...`);

@@ -32,13 +32,6 @@ module.exports = bookshelf.model('Album', {
       .fetchAll({ require: false });
   },
 
-  byNames(userId, names) {
-    return this.forge()
-      .where({ user_id: userId })
-      .where('title', 'in', names)
-      .fetchAll({ require: false });
-  },
-
   create(userId, title) {
     return this.forge({ 
       user_id: userId,
@@ -59,5 +52,44 @@ module.exports = bookshelf.model('Album', {
 
     album.destroy();
     return true;
+  },
+
+  async addPhoto(userId, albumId, photoId) {
+    const album = await this.forge()
+      .where({ 
+        user_id: userId,
+        id: albumId
+      })
+      .fetch({ 
+        withRelated: ['photos'],
+        require: false 
+      });
+
+    if (album) {
+      await album.photos()
+        .attach(photoId);
+    }
+
+    return album;
+  },
+
+  async removePhoto(userId, albumId, photoId) {
+    const album = await this.forge()
+      .where({ 
+        user_id: userId,
+        id: albumId
+      })
+      .fetch();
+
+    if (album) {
+      await album.related('photos')
+        .where({ 'photos.id': photoId })
+        .fetchOne();
+
+      await album.photos()
+        .detach(photoId);
+    }
+
+    return album;
   }
 });

@@ -36,19 +36,12 @@ module.exports = bookshelf.model('Photo', {
       });
   },
 
-  async create({ userId, title, url, comment, albums }) {
-    const photo = await this.forge({ 
+  create({ userId, title, url, comment }) {
+    return this.forge({ 
       user_id: userId,
       title, url, comment
     })
       .save();
-
-    if (albums) {
-      const rel = await Album.byNames(userId, albums),
-        ids = rel.map(album => album.id);
-      await photo.albums().attach(ids);  
-    }
-    return photo;
   },
   
   async destroy(userId, id) {

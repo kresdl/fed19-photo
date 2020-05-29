@@ -33,7 +33,7 @@ exports.jwt = (req, res, next) => {
       }
     }
   }
-  return res.fail(403, 'Access denied');  
+  res.fail(403, 'Access denied');  
 };
 
 exports.response = (req, res, next) => {

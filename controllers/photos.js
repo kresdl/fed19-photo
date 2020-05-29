@@ -1,7 +1,6 @@
 'use strict';
 
-const Photo = require('../models/Photo'),
-  Album = require('../models/Album');
+const Photo = require('../models/Photo');
 
 exports.photos = async (req, res) => {
   try {
@@ -37,16 +36,15 @@ exports.photo = async (req, res) => {
 };
 
 exports.newPhoto = async (req, res) => {
-  try {
-    const { title, url, comment, albums } = req.body,
-      { user } = res.locals;
+  const { title, url, comment } = req.body;
 
-    await Photo.create({ 
-      userId: user,
-      title, url, comment, albums
-    });
+    try {
+      const photo = await Photo.create({ 
+        userId: res.locals.user,
+        title, url, comment
+      });
 
-    res.success(200, 'Photo created');  
+    res.success(200, photo);  
 
   } catch (err) {
     console.log(err);

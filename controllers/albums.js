@@ -24,6 +24,7 @@ exports.album = async (req, res) => {
 
     if (album) {
       res.success(200, album);
+      
     } else {
       res.fail(404, 'Album not found');
     }
@@ -35,18 +36,17 @@ exports.album = async (req, res) => {
 };
 
 exports.newAlbum = async (req, res) => {
-  const { title } = req.body;
-
   try {
-    await Album.create(res.locals.user, title);
-    res.success(200, 'Album created');
+    const album = await Album.create(res.locals.user, req.body.title);
+    res.success(200, album);
 
   } catch (err) {
-    console.log(err);
 
     if (err.code === 'ER_DUP_ENTRY') {
       res.fail(409, 'Album already exists');
+
     } else {
+      console.log(err);
       res.error();
     }
   }
@@ -65,5 +65,50 @@ exports.deleteAlbum = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.error();
+  }
+}
+
+exports.addPhoto = async (req, res) => {
+  try {
+    const album = await Album.addPhoto(res.locals.user, 
+      +req.params.albumId, +req.params.photoId);
+
+    if (album) {
+      res.success(200, 'Photo added');
+    } else {
+      res.fail(404, 'Album not found');
+    }
+  
+  } catch (err) {
+
+    if (err.code === 'ER_NO_REFERENCED_ROW_2') {
+      res.fail(409, 'Photo not found');
+
+    } else {
+      console.log(err);
+      res.error();
+    }
+  }
+}
+
+exports.removePhoto = async (req, res) => {
+  try {
+    const album = await Album.removePhoto(res.locals.user, 
+      +req.params.albumId, +req.params.photoId);
+
+    if (album) {
+      res.success(200, 'Photo removed');
+    } else {
+      res.fail(404, 'Album not found');
+    }
+  
+  } catch (err) {
+    if (err.message === 'EmptyResponse') {
+      res.fail(409, 'Photo not found');
+
+    } else {
+      console.log(err);
+      res.error();
+    }
   }
 }

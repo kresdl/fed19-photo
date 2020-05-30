@@ -1,7 +1,10 @@
 'use strict';
 
-const bookshelf = require('../bookshelf'),
-  Album = require('../models/Album');
+// Model methods throw bookshelf errors sparsingly so controller 
+// can distinguish between database driver errors and empty results as
+// effectively as possible.
+
+const bookshelf = require('../bookshelf');
 
 module.exports = bookshelf.model('Photo', {
   tableName: 'photos',

@@ -2,7 +2,7 @@
 
 const Album = require('../models/Album');
 
-exports.albums = async (req, res) => {
+exports.albums = async (_, res) => {
   try {
     const albums = await Album.byUser(res.locals.user);
 
@@ -84,6 +84,9 @@ exports.addPhoto = async (req, res) => {
     if (err.code === 'ER_NO_REFERENCED_ROW_2') {
       res.fail(409, 'Photo not found');
 
+    } else if (err.code === 'ER_DUP_ENTRY') {
+      res.fail(409, 'Album already contains photo');
+
     } else {
       console.log(err);
       res.error();
@@ -111,4 +114,4 @@ exports.removePhoto = async (req, res) => {
       res.error();
     }
   }
-}
+};

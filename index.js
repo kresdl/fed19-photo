@@ -10,11 +10,12 @@ const app = require('express')(),
   port = process.env.PORT || 3000;
 
 app.disable('x-powered-by');
+
 app.use(cors, bodyParser.json(), response);
 app.use('/', users, jwt);
 app.use('/albums', albums);
 app.use('/photos', photos);
-app.use('/', (req, res) => res.fail());
+app.use('/', (_, res) => res.fail(409, 'Unsupported operation'));
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Listening on port ${port}...`);

@@ -2,7 +2,7 @@
 
 const Photo = require('../models/Photo');
 
-exports.photos = async (req, res) => {
+exports.photos = async (_, res) => {
   try {
     const photos = await Photo.byUser(res.locals.user);
 

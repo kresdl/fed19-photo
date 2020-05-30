@@ -1,5 +1,9 @@
 'use strict';
 
+// Model methods throw bookshelf errors sparsingly so controller 
+// can distinguish between database driver errors and empty results as
+// effectively as possible.
+
 const bookshelf = require('../bookshelf'),
   bcrypt = require('bcrypt');
 
@@ -14,6 +18,13 @@ module.exports = bookshelf.model('User', {
     return this.hasMany('Photo');
   }
 }, {
+
+  byId(id) {
+    return this.forge()
+      .where({ id })
+      .fetch({ require: false });
+  },
+
   async register({ firstName, lastName, email, password, }) {
     const hashed = await bcrypt.hash(password, 10);
 

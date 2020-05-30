@@ -1,7 +1,8 @@
 'use strict';
 
 const jwt = require('jsonwebtoken'),
-  { validationResult } = require('express-validator');
+  { validationResult } = require('express-validator'),
+  User = require('../models/User');
 
 exports.cors = (req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*');
@@ -15,7 +16,7 @@ exports.cors = (req, res, next) => {
   next();
 };
 
-exports.jwt = (req, res, next) => {
+exports.jwt = async (req, res, next) => {
   const auth = req.get('Authorization');
 
   if (auth) {
@@ -23,11 +24,21 @@ exports.jwt = (req, res, next) => {
 
     if (token) {
       try {
-        const { user } = jwt.verify(token, process.env.JWT_SECRET);
-        res.locals.user = user;
-        return next();
+        const id = jwt.verify(token, process.env.JWT_SECRET).user,
+          user = await User.byId(id);
+        
+        if (user) {
+          // Token verification succeeded and user was found in database
+          res.locals.user = id;
+          return next();
+
+        } else {
+          // Token verification succeeded but user has been deleted from database
+          return res.fail(403, 'User not found');
+        }
 
       } catch (err) {
+        // Token verification failed
         console.log(err);
         return res.fail(403, 'Access denied');
       }
@@ -36,7 +47,8 @@ exports.jwt = (req, res, next) => {
   res.fail(403, 'Access denied');  
 };
 
-exports.response = (req, res, next) => {
+// Assign customized response methods to conform to JSend-specification
+exports.response = (_, res, next) => {
   res.success = (status = 200, data = 'Operation succeeded') => {
     res.status(status).json({
       status: 'success',
@@ -61,6 +73,7 @@ exports.response = (req, res, next) => {
   next();
 };
 
+// Catch Express-validator errors
 exports.validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) return next();

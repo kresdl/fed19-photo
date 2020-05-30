@@ -1,5 +1,9 @@
 'use strict';
 
+// Model methods throw bookshelf errors sparsingly so controller 
+// can distinguish between database driver errors and empty results as
+// effectively as possible.
+
 const bookshelf = require('../bookshelf');
 
 module.exports = bookshelf.model('Album', {
@@ -65,6 +69,7 @@ module.exports = bookshelf.model('Album', {
         require: false 
       });
 
+    // MySQL driver throws if constraints are not met.
     if (album) {
       await album.photos()
         .attach(photoId);
@@ -82,6 +87,8 @@ module.exports = bookshelf.model('Album', {
       .fetch();
 
     if (album) {
+
+      // Confirm existense of photo, make bookshelf throw otherwise
       await album.related('photos')
         .where({ 'photos.id': photoId })
         .fetchOne();

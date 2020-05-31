@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken'),
 
 exports.cors = (req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*');
-  res.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.set('Access-Control-Expose-Headers', 'Content-Type, Authorization');
+  res.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  res.set('Access-Control-Allow-Headers', '*, Authorization');
+  res.set('Access-Control-Expose-Headers', '*, Authorization');
 
   if (req.method === 'OPTIONS') 
     return res.sendStatus(200);
@@ -28,23 +28,20 @@ exports.jwt = async (req, res, next) => {
           user = await User.byId(id);
         
         if (user) {
-          // Token verification succeeded and user was found in database
           res.locals.user = id;
           return next();
 
         } else {
-          // Token verification succeeded but user has been deleted from database
-          return res.fail(403, 'User not found');
+          return res.fail(403, 'Token valid but unable find user in database');
         }
 
       } catch (err) {
-        // Token verification failed
         console.log(err);
-        return res.fail(403, 'Access denied');
+        return res.fail(403, 'Invalid token');
       }
     }
   }
-  res.fail(403, 'Access denied');  
+  res.fail(403, 'Access denied');
 };
 
 // Assign customized response methods to conform to JSend-specification

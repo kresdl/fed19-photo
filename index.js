@@ -12,9 +12,9 @@ const app = require('express')(),
 app.disable('x-powered-by');
 
 app.use(cors, bodyParser.json(), response);
-app.use('/', users, jwt);
-app.use('/albums', albums);
-app.use('/photos', photos);
+app.use('/', users);
+app.use('/albums', jwt, albums);
+app.use('/photos', jwt, photos);
 app.use('/', (_, res) => res.fail(409, 'Unsupported operation'));
 
 app.listen(port, '0.0.0.0', () => {

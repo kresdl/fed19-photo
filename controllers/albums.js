@@ -83,7 +83,7 @@ exports.addPhoto = async (req, res) => {
   } catch (err) {
 
     if (err.code === 'ER_NO_REFERENCED_ROW_2') {
-      res.fail(409, 'Photo not found');
+      res.fail(404, 'Photo not found');
 
     } else if (err.code === 'ER_DUP_ENTRY') {
       res.fail(409, 'Album already contains photo');
@@ -108,7 +108,7 @@ exports.removePhoto = async (req, res) => {
   
   } catch (err) {
     if (err.message === 'ENOENT') {
-      res.fail(409, 'Photo not found');
+      res.fail(404, 'Photo not found');
 
     } else {
       console.log(err);

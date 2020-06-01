@@ -16,16 +16,46 @@ module.exports = bookshelf.model('User', {
 
   photos() {
     return this.hasMany('Photo');
-  }
+  },
+  
 }, {
 
-  byId(id) {
+  byId(id, ...related) {
     return this.forge()
       .where({ id })
-      .fetch({ require: false });
+      .fetch({ withRelated: related });
   },
 
-  async register({ firstName, lastName, email, password, }) {
+  async photos(userId) {
+    const user = await this.byId(userId, 'photos');
+    return user.related('photos');
+  },
+
+  async photo(userId, id) {
+    const photos = await this.photos(userId);
+
+    return photos.where({ id })
+      .fetchOne({ 
+        require: false
+      });
+  },
+
+  async albums(userId) {
+    const user = await this.byId(userId, 'albums');
+    return user.related('albums');
+  },
+
+  async album(userId, id) {
+    const albums = await this.albums(userId);
+
+    return albums.where({ id })
+      .fetchOne({ 
+        withRelated: ['photos'],
+        require: false
+      });
+  },
+
+  async register({ firstName, lastName, email, password }) {
     const hashed = await bcrypt.hash(password, 10);
 
     return this.forge({

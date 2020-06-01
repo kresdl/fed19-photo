@@ -1,10 +1,11 @@
 'use strict';
 
-const Album = require('../models/Album');
+const Album = require('../models/Album'),
+  User = require('../models/User');
 
 exports.albums = async (_, res) => {
   try {
-    const albums = await Album.byUser(res.locals.user);
+    const albums = await User.albums(res.locals.user);
 
     if (albums.length) {
       res.success(200, albums);
@@ -20,7 +21,7 @@ exports.albums = async (_, res) => {
 
 exports.album = async (req, res) => {
   try {
-    const album = await Album.byId(res.locals.user, +req.params.albumId);
+    const album = await User.album(res.locals.user, +req.params.albumId);
 
     if (album) {
       res.success(200, album);
@@ -106,7 +107,7 @@ exports.removePhoto = async (req, res) => {
     }
   
   } catch (err) {
-    if (err.message === 'EmptyResponse') {
+    if (err.message === 'ENOENT') {
       res.fail(409, 'Photo not found');
 
     } else {

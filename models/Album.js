@@ -19,85 +19,39 @@ module.exports = bookshelf.model('Album', {
   }
 }, {
 
-  byId(userId, id) {
-    return this.forge()
-      .where({ 
-        user_id: userId, 
-        id 
-      })
-      .fetch({ 
-        withRelated: ['photos'], 
-        require: false 
-      });
-  },
-
-  byUser(id) {
-    return this.forge()
-      .where({ user_id: id })
-      .fetchAll({ require: false });
-  },
-
   create(userId, title) {
     return this.forge({ 
-      user_id: userId,
-      title 
+      title,
+      user_id: userId
     })
       .save();
   },
 
   async destroy(userId, id) {
-    const album = await this.forge()
-      .where({ 
-        user_id: userId, 
-        id 
-      })
-      .fetch({ require: false });
-    
-    if (!album) return false;
+    const album = await User.album(userId, id);
+    if (!album) return null;
 
-    album.destroy();
-    return true;
+    return album.destroy();
   },
-
+      
   async addPhoto(userId, albumId, photoId) {
-    const album = await this.forge()
-      .where({ 
-        user_id: userId,
-        id: albumId
-      })
-      .fetch({ 
-        withRelated: ['photos'],
-        require: false 
-      });
+    const album = await User.album(userId, albumId);
+    if (!album) return null;
 
-    // MySQL driver throws if constraints are not met.
-    if (album) {
-      await album.photos()
-        .attach(photoId);
-    }
-
+    await album.related('photos')
+      .attach(photoId);
+    
     return album;
   },
 
   async removePhoto(userId, albumId, photoId) {
-    const album = await this.forge()
-      .where({ 
-        user_id: userId,
-        id: albumId
-      })
-      .fetch();
+    const album = await User.album(userId, albumId);
+    if (!album) return null;
 
-    if (album) {
+    const photos = album.related('photos');
+    if (!photos.get(photoId)) throw Error('ENOENT');
 
-      // Confirm existense of photo, make bookshelf throw otherwise
-      await album.related('photos')
-        .where({ 'photos.id': photoId })
-        .fetchOne();
-
-      await album.photos()
-        .detach(photoId);
-    }
-
+    photos.detach(photoId);
     return album;
   }
 });

@@ -1,10 +1,11 @@
 'use strict';
 
-const Photo = require('../models/Photo');
+const Photo = require('../models/Photo'),
+  User = require('../models/User');
 
 exports.photos = async (_, res) => {
   try {
-    const photos = await Photo.byUser(res.locals.user);
+    const photos = await User.photos(res.locals.user);
 
     if (photos.length) {
       res.success(200, photos);
@@ -20,7 +21,7 @@ exports.photos = async (_, res) => {
 
 exports.photo = async (req, res) => {
   try {
-    const photo = await Photo.byId(res.locals.user, +req.params.photoId);
+    const photo = await User.photo(res.locals.user, +req.params.photoId);
 
     if (photo) {
       res.success(200, photo);

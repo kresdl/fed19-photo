@@ -4,7 +4,8 @@
 // can distinguish between database driver errors and empty results as
 // effectively as possible.
 
-const bookshelf = require('../bookshelf');
+const bookshelf = require('../bookshelf'),
+  User = require('./User');
 
 module.exports = bookshelf.model('Photo', {
   tableName: 'photos',
@@ -18,47 +19,19 @@ module.exports = bookshelf.model('Photo', {
   }
 }, {
 
-  byId(userId, id) {
-    return this.forge()
-      .where({ 
-        user_id: userId,
-        id 
-      })
-      .fetch({ 
-        withRelated: ['albums'], 
-        require: false 
-      });
-  },
-
-  byUser(userId) {
-    return this.forge()
-      .where({ user_id: userId })
-      .fetchAll({ 
-        withRelated: ['albums'], 
-        require: false 
-      });
-  },
-
   create({ userId, title, url, comment }) {
     return this.forge({ 
-      user_id: userId,
-      title, url, comment
+      title, url, comment,
+      user_id: userId
     })
       .save();
   },
   
   async destroy(userId, id) {
-    const photo = await this.forge()
-      .where({ 
-        user_id: userId, 
-        id 
-      })
-      .fetch({ require: false });
-    
-    if (!photo) return false;
+    const photo = await User.photo(userId, id);
+    if (!photo) return null;
 
-    photo.destroy();
-    return true;
+    return photo.destroy();
   }
 });
 

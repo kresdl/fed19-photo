@@ -4,7 +4,8 @@
 // can distinguish between database driver errors and empty results as
 // effectively as possible.
 
-const bookshelf = require('../bookshelf');
+const bookshelf = require('../bookshelf'),
+  User = require('./User');
 
 module.exports = bookshelf.model('Album', {
   tableName: 'albums',

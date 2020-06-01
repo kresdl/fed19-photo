@@ -7,7 +7,7 @@ const router = require('express').Router(),
 
   oneOrMore = 'Must be 1 character or more',
   fiveOrMore = 'Must be 5 characters or more',
-  beEmail = 'Must be 1 character or more';
+  beEmail = 'Must be an email';
 
 router.post('/register',
   body('first_name').notEmpty().withMessage(oneOrMore),

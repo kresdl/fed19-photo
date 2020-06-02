@@ -1,0 +1,719 @@
+{
+	"info": {
+		"_postman_id": "c0d30583-6a88-4f63-b1fa-b4af740f3bcf",
+		"name": "photo-call-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\": \"\",\n\t\"last_name\": \"\",\n\t\"email\": \"\",\n\t\"password\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/register",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "https://foo.example",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"a@b.se\",\n\t\"password\": \"12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/login",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create album",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"sommar\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/albums",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"albums"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create photo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"sommarbild\",\n\t\"url\": \"http://placehold.it/256\",\n\t\"comment\": \"sdkfjdslkfjsd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/photos",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put photo in album",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/albums/1/1",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"albums",
+						"1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "albums",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "https://foo.example",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/albums",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"albums"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "album",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "https://foo.example",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/albums/1",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"albums",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "photos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/photos",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "photo",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/photos/1",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"photos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove photo from album",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/albums/1/1",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"albums",
+						"1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete photo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/photos/1",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"photos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete album",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE1OTEwOTk0NDV9.PLoLQMGhhf2P8tmraBAzBGFAuCBfn6XOP9OEMOKS4KM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9sbHkiLCJhZ2UiOiI0MSIsImdlbmRlciI6Ik1hbGUiLCJpYXQiOjE1ODcxMDgwMDh9._PIDI4KNWYkbRXNXnxN21tZbVog4Mv0LrEEa48LHxio",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "https://foo.example",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fed19-peterh-photo.herokuapp.com/albums/1",
+					"protocol": "https",
+					"host": [
+						"fed19-peterh-photo",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"albums",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

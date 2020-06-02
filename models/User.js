@@ -36,9 +36,7 @@ module.exports = bookshelf.model('User', {
 
     return user.photos()
       .where({ id })
-      .fetchOne({ 
-        require: false
-      });
+      .fetchOne({ require: false });
   },
 
   async albums(userId) {

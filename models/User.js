@@ -32,9 +32,10 @@ module.exports = bookshelf.model('User', {
   },
 
   async photo(userId, id) {
-    const photos = await this.photos(userId);
+    const user = await this.byId(userId);
 
-    return photos.where({ id })
+    return user.photos()
+      .where({ id })
       .fetchOne({ 
         require: false
       });
@@ -46,9 +47,10 @@ module.exports = bookshelf.model('User', {
   },
 
   async album(userId, id) {
-    const albums = await this.albums(userId);
+    const user = await this.byId(userId);
 
-    return albums.where({ id })
+    return user.albums()
+      .where({ id })
       .fetchOne({ 
         withRelated: ['photos'],
         require: false

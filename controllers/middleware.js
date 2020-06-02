@@ -1,8 +1,9 @@
 'use strict';
 
 const jwt = require('jsonwebtoken'),
-  { validationResult } = require('express-validator'),
-  User = require('../models/User');
+  { body, validationResult } = require('express-validator'),
+  User = require('../models/User'),
+  oneOrMore = 'Must be 1 character or more';
 
 module.exports = {
 
@@ -17,6 +18,8 @@ module.exports = {
 
     next();
   },
+
+  // jsonwebtoken authorization
 
   async jwt(req, res, next) {
     const auth = req.get('Authorization');
@@ -73,11 +76,20 @@ module.exports = {
     next();
   },
 
-  // Catch Express-validator errors
-  
-  validate(req, res, next) {
-    const errors = validationResult(req);
-    if (errors.isEmpty()) return next();
-    res.fail(422, errors.array());
+  // input validators
+
+  validators: {
+    title: body('title').notEmpty().withMessage(oneOrMore),
+    url: body('url').isURL().withMessage('Must be an URL'),
+    firstName: body('first_name').notEmpty().withMessage(oneOrMore),
+    lastName: body('last_name').notEmpty().withMessage(oneOrMore),
+    email: body('email').isEmail().withMessage('Must be an email'),
+    password: body('password').isLength({ min: 5 }).withMessage('Must be 5 characters or more'),
+
+    validate(req, res, next) {
+      const errors = validationResult(req);
+      if (errors.isEmpty()) return next();
+      res.fail(422, errors.array());
+    }  
   }
 };

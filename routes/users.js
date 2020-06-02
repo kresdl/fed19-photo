@@ -2,25 +2,14 @@
 
 const router = require('express').Router(),
   { register, login } = require('../controllers/users'),
-  { body } = require('express-validator'),
-  { validate }= require('../controllers/middleware'),
-
-  oneOrMore = 'Must be 1 character or more',
-  fiveOrMore = 'Must be 5 characters or more',
-  beEmail = 'Must be an email';
+  { firstName, lastName, email, password, validate } = require('../controllers/middleware').validators;
 
 router.post('/register',
-  body('first_name').notEmpty().withMessage(oneOrMore),
-  body('last_name').notEmpty().withMessage(oneOrMore),
-  body('email').isEmail().withMessage(beEmail),
-  body('password').isLength({ min: 5 }).withMessage(fiveOrMore),
-  validate, register
+  firstName, lastName, email, password, validate, register
 );
 
 router.post('/login',
-  body('email').isEmail().withMessage(beEmail),
-  body('password').isLength({ min: 5 }).withMessage(fiveOrMore),
-  validate, login
+  email, password, validate, login
 );
 
 module.exports = router;

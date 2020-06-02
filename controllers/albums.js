@@ -97,6 +97,34 @@ module.exports = {
     }
   },
 
+  async addMany(req, res) {
+    const photos = req.body;
+
+    try {
+      const album = await Album.addPhoto(res.locals.user, 
+        +req.params.albumId, photos);
+
+      if (album) {
+        res.success(200, 'Photos added');
+      } else {
+        res.fail(404, 'Album not found');
+      }
+
+    } catch (err) {
+
+      if (err.code === 'ER_NO_REFERENCED_ROW_2') {
+        res.fail(404, 'A photo is not found');
+
+      } else if (err.code === 'ER_DUP_ENTRY') {
+        res.fail(409, 'Album already contains a photo');
+
+      } else {
+        console.log(err);
+        res.error();
+      }
+    }
+  },
+
   async removePhoto(req, res) {
     try {
       const album = await Album.removePhoto(res.locals.user,

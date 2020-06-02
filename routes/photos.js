@@ -1,7 +1,7 @@
 'use strict';
 
 const router = require('express').Router(),
-  { photos, photo, newPhoto, deletePhoto } = require('../controllers/photos'),
+  { photos, photo, newPhoto, newPhotos, deletePhoto } = require('../controllers/photos'),
   { title, url, validate } = require('../controllers/middleware').validators;
 
 router.get('/', photos);

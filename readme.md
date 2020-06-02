@@ -38,6 +38,12 @@ POST /photos
 }
 ```
 
+## Put multiple photos in album
+POST /albums/albumId
+```json
+[...photoIds]
+```
+
 ## Put photo in album
 PUT /albums/albumId/photoId
 
